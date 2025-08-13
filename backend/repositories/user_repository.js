@@ -30,15 +30,8 @@ const getAllUsers = async () => {
     return rows;
 };
 
-const setPhoneVerified = async (phone) => {
-    // Try updating `phone` column first, then fallback to `phone_number`
-    const [result1] = await db.query('UPDATE users SET phone_verified = 1 WHERE phone = ?', [phone]);
-    if (result1.affectedRows > 0) {
-        return true;
-    }
-    // fallback if your table uses `phone_number` column name
-    const [result2] = await db.query('UPDATE users SET phone_verified = 1 WHERE phone_number = ?', [phone]);
-    return result2.affectedRows > 0;
+const updatePassword = async (id, hashedPassword) => {
+    await db.query('UPDATE users SET password = ? WHERE id = ?', [hashedPassword, id]);
 };
 
-module.exports = { createUser, findByEmail, findByUsername, findByPhone, findById, getAllUsers, setPhoneVerified };
+module.exports = { createUser, findByEmail, findByUsername, findByPhone, findById, getAllUsers, updatePassword };

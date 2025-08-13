@@ -15,7 +15,6 @@ const signup = async (req, res) => {
         return res.status(201).json({
             success: true,
             user: result.user,
-            message: 'Signup successful. Please verify your phone via /otp/send-otp.'
         });
     } catch (err) {
         console.error('[signup error]', err.message);
@@ -35,5 +34,32 @@ const login = async (req, res) => {
     }
 };
 
+const forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) {
+            console.error("❌ Email missing in request body");
+            return res.status(400).json({ success: false, message: err.message });
+        }
+        console.log(`🔍 Looking for user with email: ${email}`);
+        const result = await authService.forgotPassword(email);
+        console.log("✅ Forgot password process completed successfully");
+        return res.status(200).json({ success: true, ...result });
+    } catch (err) {
+        console.error("💥 Error in forgot-password:", err.message);
+        return res.status(400).json({ success: false, message: err.message });
+    }
+};
 
-module.exports = { signup, login };
+const changePassword = async (req, res) => {
+    try {
+        const { currentPassword, newPassword, confirmPassword } = req.body;
+        const userId = req.user.id; // from authMiddleware
+        const result = await authService.changePassword(userId, currentPassword, newPassword, confirmPassword);
+        res.status(200).json({ success: true, ...result });
+    } catch (err) {
+        res.status(400).json({ success: false, message: err.message });
+    }
+};
+
+module.exports = { signup, login, forgotPassword, changePassword };

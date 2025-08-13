@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
 const authController = require('../controllers/auth_controller');
+const authMiddleware = require('../middlewares/auth_middleware');
+
 
 // POST /auth/signup
 router.post(
@@ -23,5 +25,9 @@ router.post(
   ],
   authController.login
 );
+
+router.post('/forgot-password', authController.forgotPassword);
+
+router.post('/change-password', authMiddleware, authController.changePassword);
 
 module.exports = router;
