@@ -1,5 +1,11 @@
 const nodemailer = require('nodemailer');
 
+function normalizeEmail(email) {
+    if (!email || typeof email !== 'string') return email;
+    const [localPart, domain = ''] = email.trim().toLowerCase().split('@');
+    return `${localPart}@${domain}`;
+}
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -28,13 +34,5 @@ const sendEmail = async (to, subject, html) => {
         throw new Error('Failed to send email');
     }
 };
-
-function normalizeEmail(email) {
-    const [localPart, domain] = email.toLowerCase().split('@');
-    if (domain === 'gmail.com') {
-        return `${localPart.replace(/\./g, '')}@${domain}`;
-    }
-    return `${localPart}@${domain}`;
-}
 
 module.exports = { sendEmail, normalizeEmail };

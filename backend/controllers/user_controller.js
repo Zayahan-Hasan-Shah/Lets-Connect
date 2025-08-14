@@ -3,7 +3,7 @@ const userRepo = require('../repositories/user_repository');
 const getAllUsers = async (req, res) => {
     try {
         const users = await userRepo.getAllUsers();
-        return res.status(200).json({ success: true, users });
+        return res.status(200).json({ success: true, total_user : users.length, users });
     } catch (err) {
         return res.status(500).json({ success: false, message: err.message });
     }

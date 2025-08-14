@@ -9,7 +9,7 @@ const authMiddleware = require('../middlewares/auth_middleware');
 router.post(
   '/signup',
   [
-    body('email').isEmail().withMessage('Valid email is required').normalizeEmail(),
+    body('email').isEmail().withMessage('Valid email is required'),
     body('username').isLength({ min: 3 }).withMessage('Username must be at least 3 characters').trim().escape(),
     body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
     body('phone').matches(/^\+?[0-9]{7,15}$/).withMessage('Invalid phone number format'),

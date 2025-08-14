@@ -33,6 +33,7 @@ pool.getConnection((err, connection) => {
         console.error(`❌ Error connecting to MySQL: ${err.message}`);
     } else {
         console.log(`✅ Connected to MySQL`);
+        console.log("📦 Using database:", process.env.DB_NAME);
         connection.release();
     }
 });

@@ -1,10 +1,9 @@
 const bcrypt = require('bcrypt');
 const userRepo = require('../repositories/user_repository');
 const { signToken } = require('../utils/jwt');
-const { sendEmail } = require('../utils/email');
+const { sendEmail, normalizeEmail } = require('../utils/email');
 
 const signup = async ({ email, username, password, phone }) => {
-    email = normalizeEmail(email); // ✅ Normalize before using
 
     const existsEmail = await userRepo.findByEmail(email);
     if (existsEmail) throw new Error('Email already in use');
@@ -23,7 +22,6 @@ const signup = async ({ email, username, password, phone }) => {
 };
 
 const login = async ({ email, password }) => {
-    email = normalizeEmail(email); // ✅ Normalize before query
 
     const user = await userRepo.findByEmail(email);
     if (!user) throw new Error('Invalid email or password');
@@ -39,6 +37,7 @@ const login = async ({ email, password }) => {
 
 
 const forgotPassword = async (email) => {
+    email = email.trim();
     const user = await userRepo.findByEmail(email);
     console.log("MKC USER", user)
     if (!user) {

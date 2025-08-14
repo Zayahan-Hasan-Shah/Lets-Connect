@@ -1,21 +1,37 @@
+require('dotenv').config();
 const express = require('express');
-const { createUsersTable } = require('./models/user_model');
 const db = require('./config/db');
-
-
-const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/user');
+const { createUsersTable } = require('./models/user_model');
 
 const app = express();
 
-(async () => {
-  await db.query(createUsersTable);
-})();
+app.use(express.json());
 
-app.use(express.json())
-
+// Routes
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/users/', userRoutes);
 
-const PORT = process.env.PORT;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+// Function to ensure required tables exist
+const initDatabase = async () => {
+    try {
+        console.log('🔍 Checking & creating tables if missing...');
+        await db.query(createUsersTable);
+        console.log('✅ Users table ready');
+    } catch (err) {
+        console.error('❌ Error creating tables:', err.message);
+        process.exit(1);
+    }
+};
+
+// Start server
+const startServer = async () => {
+    await initDatabase(); 
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+        console.log(`🚀 Server running on port ${PORT}`);
+    });
+};
+
+startServer();

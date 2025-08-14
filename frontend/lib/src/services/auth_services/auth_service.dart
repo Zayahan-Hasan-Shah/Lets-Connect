@@ -1,26 +1,29 @@
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:frontend/src/core/api_urls.dart';
 import 'package:frontend/src/models/login_model.dart';
 import 'package:frontend/src/models/signup_model.dart';
+import 'package:frontend/src/services/common_services/api_service.dart';
 
 class AuthService {
   Future<SignupModel?> signupService(String userName, String email,
       String password, String phoneNumber) async {
     try {
       await Future.delayed(const Duration(seconds: 1));
-      if (userName == 'Zayahan' &&
-          email == 'zayahan@gmail.com' &&
-          password == '123qwe' &&
-          phoneNumber == '923327699137') {
-        return SignupModel(
-            userName: userName,
-            email: email,
-            password: password,
-            phoneNumber: phoneNumber);
-      } else {
-        log('Invalid signup credentials');
-        return null;
+      final res = await APIService.signup(
+        api: APIUrls.signupUrl,
+        body: {
+          "userName": userName,
+          "email": email,
+          "password": password,
+          "phoneNumber": phoneNumber,
+        },
+      );
+      if (res != null) {
+        return SignupModel.fromJson(jsonDecode(res));
       }
+      return null;
     } catch (e) {
       log('Error in dummy signup : $e');
       return null;
