@@ -38,7 +38,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
     Future.delayed(const Duration(seconds: 3), () async {
       try {
-        context.go(RouteNames.loginScreen);
+        context.go(RouteNames.logoScreen);
       } catch (e) {}
     });
   }
@@ -53,37 +53,48 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorAssets.backgroundColor,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 32.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const SizedBox(), // Empty space at top
-              AnimatedBuilder(
-                animation: _animation!,
-                builder: (context, child) {
-                  return Opacity(
-                    opacity: _animation?.value ?? 1,
-                    child: Transform.scale(
-                      scale: _animation?.value,
-                      child: child,
-                    ),
-                  );
-                },
-                child: Image.asset(
-                  AppAssets.logoImage,
-                  width: MediaQuery.of(context).size.width * 0.8,
-                ),
+      body: Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            AnimatedBuilder(
+              animation: _animation!,
+              builder: (context, child) {
+                return Opacity(
+                  opacity: _animation?.value ?? 1,
+                  child: Transform.scale(
+                    scale: _animation?.value,
+                    child: child,
+                  ),
+                );
+              },
+              child: Image.asset(
+                AppAssets.logoImage,
+                width: MediaQuery.of(context).size.width * 0.8,
               ),
-              TitleText(
+            ),
+            AnimatedBuilder(
+              animation: _animation!,
+              builder: (context, child) {
+                return Opacity(
+                  opacity: _animation?.value ?? 1,
+                  child: Transform.scale(
+                    scale: _animation?.value,
+                    child: child,
+                  ),
+                );
+              },
+              child: TitleText(
                 title: 'Let\'s Connect',
                 fontSize: 32,
                 color: ColorAssets.whiteColor,
+                textAlign: TextAlign.center,
                 weight: FontWeight.w700,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

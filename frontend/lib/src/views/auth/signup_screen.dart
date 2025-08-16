@@ -10,6 +10,7 @@ import 'package:frontend/src/widgets/common_widgets/custom_button.dart';
 import 'package:frontend/src/widgets/common_widgets/custom_snackbar.dart';
 import 'package:frontend/src/widgets/common_widgets/custom_text_field.dart';
 import 'package:frontend/src/widgets/common_widgets/title_text.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,43 +42,49 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     return Scaffold(
       backgroundColor: ColorAssets.backgroundColor,
       body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Form(
-          key: formkey,
-          child: Column(
-            children: [
-              TitleText(
-                title: 'Let\'s Connect',
-                fontSize: 32.sp,
-                color: ColorAssets.whiteColor,
-                weight: FontWeight.bold,
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 14.h),
-              Image.asset(AppAssets.logoImage,
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  fit: BoxFit.cover),
-              SizedBox(height: 14.h),
-              TitleText(
-                  title: 'Register',
-                  fontSize: 24.sp,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: formkey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TitleText(
+                  title: 'Let\'s Connect',
+                  fontSize: 20.sp,
                   color: ColorAssets.whiteColor,
-                  weight: FontWeight.bold),
-              SizedBox(height: 14.h),
-              _userNameBuid(),
-              SizedBox(height: 14.h),
-              _phoneNumberBuid(),
-              SizedBox(height: 14.h),
-              _emailBuid(),
-              SizedBox(height: 14.h),
-              _passwordBuid(),
-              SizedBox(height: 14.h),
-              _signupButton(),
-            ],
+                  weight: FontWeight.bold,
+                  textAlign: TextAlign.center,
+                ),
+                Image.asset(
+                  AppAssets.logoImage,
+                  width: MediaQuery.of(context).size.width / 3,
+                  height: MediaQuery.of(context).size.width  * 0.8,
+                  fit: BoxFit.cover,
+                ),
+                TitleText(
+                  title: 'Register',
+                  fontSize: 20.sp,
+                  color: ColorAssets.whiteColor,
+                  weight: FontWeight.bold,
+                  textAlign: TextAlign.left,
+                ),
+                SizedBox(height: 1.h),
+                _userNameBuid(),
+                SizedBox(height: 1.h),
+                _phoneNumberBuid(),
+                SizedBox(height: 1.h),
+                _emailBuid(),
+                SizedBox(height: 1.h),
+                _passwordBuid(),
+                SizedBox(height: 2.h),
+                _signupButton(),
+                _loginRouteBuild(),
+              ],
+            ),
           ),
         ),
-      )),
+      ),
     );
   }
 
@@ -88,7 +95,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
           controller: userNameController,
           hintText: 'Hitmam_12',
           hintColor: ColorAssets.hintTextColor,
-          fontSize: 14.sp,
+          fontSize: 16.sp,
           validator: AppValidation.userNameVaildation,
         )
       ],
@@ -102,7 +109,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
           controller: emailController,
           hintText: 'joe@email.com',
           hintColor: ColorAssets.hintTextColor,
-          fontSize: 14.sp,
+          fontSize: 16.sp,
           validator: AppValidation.emailValidation,
         )
       ],
@@ -117,7 +124,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
           hintText: '******',
           obsText: true,
           hintColor: ColorAssets.hintTextColor,
-          fontSize: 14.sp,
+          fontSize: 16.sp,
           validator: AppValidation.passwordValidation,
         )
       ],
@@ -128,10 +135,10 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     return Column(
       children: [
         CustomTextField(
-          controller: userNameController,
+          controller: phoneNumberController,
           hintText: '9231XXXXXXX',
           hintColor: ColorAssets.hintTextColor,
-          fontSize: 14.sp,
+          fontSize: 16.sp,
           validator: AppValidation.phoneNumberValidation,
         )
       ],
@@ -142,14 +149,15 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     final signupState = ref.watch(signupNotifierProvider);
     final signupNotifier = ref.read(signupNotifierProvider.notifier);
     return SizedBox(
-      height: 30,
+      height: 6.h,
       child: Center(
         child: CustomButton(
           buttonBackgroundColor: ColorAssets.buttonColor,
-          heightFactor: 1.8,
+          heightFactor: 1.02,
           widthFactor: 0.6,
           borderRadiusButton: 20,
           alignmentButton: Alignment.center,
+          showLoader: signupState.buttonLoader,
           onTap: () async {
             if (formkey.currentState!.validate()) {
               log("Form is valid. Proceed with signup.");
@@ -173,6 +181,19 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
             textAlign: TextAlign.center,
             color: ColorAssets.whiteColor,
           ),
+        ),
+      ),
+    );
+  }
+
+Widget _loginRouteBuild() {
+    return Align(
+      alignment: Alignment.center,
+      child: TextButton(
+        onPressed: () { context.push('/login');},
+        child: TitleText(
+          title: 'Already have an account? Login',
+          color: ColorAssets.whiteColor,
         ),
       ),
     );
