@@ -59,7 +59,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 Image.asset(
                   AppAssets.logoImage,
                   width: MediaQuery.of(context).size.width / 3,
-                  height: MediaQuery.of(context).size.width  * 0.8,
+                  height: MediaQuery.of(context).size.width * 0.8,
                   fit: BoxFit.cover,
                 ),
                 TitleText(
@@ -186,11 +186,13 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     );
   }
 
-Widget _loginRouteBuild() {
+  Widget _loginRouteBuild() {
     return Align(
       alignment: Alignment.center,
       child: TextButton(
-        onPressed: () { context.push('/login');},
+        onPressed: () {
+          context.push('/login');
+        },
         child: TitleText(
           title: 'Already have an account? Login',
           color: ColorAssets.whiteColor,
@@ -207,10 +209,21 @@ Widget _loginRouteBuild() {
           .read(signupAuthProvider.notifier)
           .signupAuth(userName, email, password, phoneNumber);
       if (response != null) {
-        String userName = response.userName;
-        String email = response.email;
-        String password = response.password;
-        String phoenNumber = response.phoneNumber;
+        CustomSnackbar.show(
+          context: context,
+          message: "Welcome to the app",
+          title: "Signup Successful",
+          backgroundColor: ColorAssets.successColor,
+        );
+        // Use pushReplacement if you want to remove the signup screen from stack
+        context.go('/login');
+      } else {
+        CustomSnackbar.show(
+          context: context,
+          message: "Signup failed. Please try again.",
+          title: "Error",
+          backgroundColor: ColorAssets.errorColor,
+        );
       }
     } catch (e) {
       log(e.toString());

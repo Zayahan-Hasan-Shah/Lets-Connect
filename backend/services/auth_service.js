@@ -18,7 +18,7 @@ const signup = async ({ email, username, password, phone }) => {
     const user = await userRepo.createUser({ email, username, password: hashed, phone });
 
     const safeUser = { id: user.id, email: user.email, username: user.username, phone: user.phone };
-    return { user: safeUser };
+    return {user: safeUser };
 };
 
 const login = async ({ email, password }) => {

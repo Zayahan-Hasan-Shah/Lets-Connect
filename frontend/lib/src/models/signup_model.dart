@@ -6,27 +6,28 @@ SignupModel loginModelFromJson(String str) =>
 String loginModelToJson(SignupModel data) => json.encode(data.toJson());
 
 class SignupModel {
-  String userName;
+  String username;
   String email;
-  String password;
-  String phoneNumber;
+  String? password; // Make optional
+  String phone;
 
   SignupModel(
-      {required this.userName,
+      {required this.username,
       required this.email,
-      required this.password,
-      required this.phoneNumber});
+      this.password, // Make optional
+      required this.phone});
 
   factory SignupModel.fromJson(Map<String, dynamic> json) => SignupModel(
-      userName: json['userName'],
-      email: json['email'],
-      password: json['password'],
-      phoneNumber: json['phoneNumber']);
+        username: json['username'],
+        email: json['email'],
+        phone: json['phone'],
+        password: json['password'], // Will be null if not present
+      );
 
   Map<String, dynamic> toJson() => {
-        "userName": userName,
+        "username": username,
         "email": email,
-        "password": password,
-        "phoneNumber": phoneNumber,
+        "phone": phone,
+        if (password != null) "password": password,
       };
 }

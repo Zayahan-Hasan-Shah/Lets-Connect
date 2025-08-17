@@ -20,12 +20,13 @@ class APIService {
 
       final response = await http.post(headers: header, Uri.parse(api), body: jsonEncode(body));
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         log("*** response ***");
         log("URI : $api");
+        log("Status Code : ${response.statusCode}");
         log("Request Body : ${response.body}");
 
-        return response.body;
+        return response;
       }
       log("status code ${response.statusCode} || API : $api");
     } catch (e) {

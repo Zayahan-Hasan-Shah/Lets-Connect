@@ -16,9 +16,9 @@ app.use('/api/v1/users/', userRoutes);
 // Function to ensure required tables exist
 const initDatabase = async () => {
     try {
-        console.log('🔍 Checking & creating tables if missing...');
-        await db.query(createUsersTable);
-        console.log('✅ Users table ready');
+    console.log('🔍 Checking & creating tables if missing...');
+    await db.query(createUsersTable);
+    console.log('✅ Users table ready');
     } catch (err) {
         console.error('❌ Error creating tables:', err.message);
         process.exit(1);

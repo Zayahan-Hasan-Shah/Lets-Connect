@@ -11,17 +11,24 @@ class AuthService {
       String password, String phoneNumber) async {
     try {
       await Future.delayed(const Duration(seconds: 1));
-      final res = await APIService.signup(
+      final response = await APIService.signup(
         api: APIUrls.signupUrl,
         body: {
-          "userName": userName,
+          "username": userName,
           "email": email,
           "password": password,
-          "phoneNumber": phoneNumber,
+          "phone": phoneNumber,
         },
       );
-      if (res != null) {
-        return SignupModel.fromJson(jsonDecode(res));
+      if (response != null &&
+          (response.statusCode == 200 || response.statusCode == 201)) {
+        final responseData = jsonDecode(response.body);
+
+        // Check if response indicates success and has user data
+        if (responseData['success'] == true && responseData['user'] != null) {
+          return SignupModel.fromJson(
+              responseData['user']); // Pass just the user object
+        }
       }
       return null;
     } catch (e) {

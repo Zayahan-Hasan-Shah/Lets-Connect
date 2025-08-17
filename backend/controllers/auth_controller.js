@@ -11,7 +11,7 @@ const signup = async (req, res) => {
         const { email, username, password, phone } = req.body;
         const result = await authService.signup({ email, username, password, phone });
         console.log("✅ Signup succesfull");
-        console.log(`✅ Data : ${result.user.email}`);
+        console.log(`✅ Data : ${result.user.email}, ${result.user.username}, ${result.user.phone}  created successfully`);
         return res.status(201).json({
             success: true,
             user: result.user,
