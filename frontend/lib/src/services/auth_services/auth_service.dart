@@ -42,21 +42,28 @@ class AuthService {
       // Simulated delay to mimic a real network call
       await Future.delayed(const Duration(seconds: 1));
 
-      // Dummy login check
-      if (email == 'zayahan@gmail.com' && password == '123qwe') {
-        // Return a dummy LoginModel object
-        return LoginModel(
-          accessToken: 'dummy_token_abc123',
-          email: email,
-          password: password,
-        );
-      } else {
-        // Invalid credentials
-        log('Invalid credentials');
-        return null;
+      final response = await APIService.login(api: APIUrls.loginUrl, body: {
+        "email": email,
+        "password": password,
+      });
+
+      if (response != null && response.isNotEmpty) {
+        final responseData = jsonDecode(response);
+
+        // Check if response indicates success and has user data
+        if (responseData['success'] == true &&
+            responseData['user'] != null &&
+            responseData['token'] != null) {
+          // Merge user and token into one map for LoginModel
+          final userData = Map<String, dynamic>.from(responseData['user']);
+          userData['accessToken'] = responseData['token'];
+          return LoginModel.fromJson(userData);
+        }
       }
+
+      return null;
     } catch (e) {
-      log('Error in dummy login: $e');
+      log('Error in login: $e');
       return null;
     }
   }

@@ -183,9 +183,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           await ref.read(loginAuthProvider.notifier).loginAuth(email, password);
 
       if (response != null) {
-        String email = response.email;
-        String password = response.password;
-
         CustomSnackbar.show(
           context: context,
           message: 'Successfully Logged In',
