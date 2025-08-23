@@ -147,7 +147,6 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
 
   Widget _signupButton() {
     final signupState = ref.watch(signupNotifierProvider);
-    final signupNotifier = ref.read(signupNotifierProvider.notifier);
     return SizedBox(
       height: 6.h,
       child: Center(

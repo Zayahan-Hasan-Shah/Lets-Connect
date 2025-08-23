@@ -5,7 +5,6 @@ import 'package:frontend/src/controllers/auth_controller/login_controller/login_
 import 'package:frontend/src/controllers/auth_controller/login_controller/ui_login_controller.dart';
 import 'package:frontend/src/core/app_assets.dart';
 import 'package:frontend/src/core/color_assets.dart';
-import 'package:frontend/src/routes/app_routes.dart';
 import 'package:frontend/src/widgets/common_widgets/custom_button.dart';
 import 'package:frontend/src/widgets/common_widgets/custom_snackbar.dart';
 import 'package:frontend/src/widgets/common_widgets/custom_text_field.dart';
@@ -109,9 +108,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Widget _loginButton() {
-    final loginState = ref.watch(loginNotifierProvider);
-    final loginNotifier = ref.read(loginNotifierProvider.notifier);
-
     return Container(
       height: 6.h,
       child: CustomButton(
@@ -150,7 +146,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Align(
       alignment: Alignment.centerRight,
       child: TextButton(
-        onPressed: () {},
+        onPressed: () {
+          context.push('/forgetpassword');
+        },
         child: TitleText(
           title: 'Forgot password?',
           color: ColorAssets.whiteColor,

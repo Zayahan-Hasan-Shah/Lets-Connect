@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:frontend/src/core/api_urls.dart';
+import 'package:frontend/src/models/forgot_password_model.dart';
 import 'package:frontend/src/models/login_model.dart';
 import 'package:frontend/src/models/signup_model.dart';
 import 'package:frontend/src/services/common_services/api_service.dart';
@@ -64,6 +65,25 @@ class AuthService {
       return null;
     } catch (e) {
       log('Error in login: $e');
+      return null;
+    }
+  }
+
+
+  Future<ForgotPasswordModel?> forgotPasswordService(String email) async {
+    try {
+      final response = await APIService.post(
+        api: APIUrls.forgotPasswordUrl,
+        body: {"email": email},
+      );
+
+      if (response != null && response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        return ForgotPasswordModel.fromJson(responseData);
+      }
+      return null;
+    } catch (e) {
+      log('Error in forgot password: $e');
       return null;
     }
   }
