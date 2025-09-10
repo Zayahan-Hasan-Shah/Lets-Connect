@@ -5,4 +5,8 @@ class RouteNames {
   static const loginScreen = '/login';
   static const forgetPassword = '/forgetpassword';
   static const verficationNumber = '/verificationnumber';
+  static const homeScreen = '/home';
+  static const chatListScreen = '/chatlist';
+  static const profileScreen = '/profile';
+  static const bottomNavPage = '/bottompage';
 }

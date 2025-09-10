@@ -125,6 +125,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 emailController.text.trim(),
                 passwordController.text.trim(),
               );
+              context.go('/bottompage');
             } finally {
               ref.read(customButtonController.notifier).state = false;
             }

@@ -13,6 +13,7 @@ class MyApp extends ConsumerWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
           title: 'Let\'s Connect',
           routerConfig: router,
         );
