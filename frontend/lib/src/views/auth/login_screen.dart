@@ -5,6 +5,7 @@ import 'package:frontend/src/controllers/auth_controller/login_controller/login_
 import 'package:frontend/src/controllers/auth_controller/login_controller/ui_login_controller.dart';
 import 'package:frontend/src/core/app_assets.dart';
 import 'package:frontend/src/core/color_assets.dart';
+import 'package:frontend/src/services/common_services/api_service.dart';
 import 'package:frontend/src/widgets/common_widgets/custom_button.dart';
 import 'package:frontend/src/widgets/common_widgets/custom_snackbar.dart';
 import 'package:frontend/src/widgets/common_widgets/custom_text_field.dart';
@@ -182,6 +183,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           await ref.read(loginAuthProvider.notifier).loginAuth(email, password);
 
       if (response != null) {
+        tokenKey = response.accessToken;
+
         CustomSnackbar.show(
           context: context,
           message: 'Successfully Logged In',

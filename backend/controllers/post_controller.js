@@ -68,8 +68,17 @@ const getUserPosts = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
     try {
-        const posts = await postService.getAllPosts();
-        res.json({ success: true, posts });
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const { posts, total } = await postService.getAllPosts(page, limit);
+
+        res.json({
+            success: true,
+            page,
+            limit,
+            total,
+            posts
+        });
     } catch (err) {
         res.status(400).json({ success: false, message: err.message });
     }

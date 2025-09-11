@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/src/core/color_assets.dart';
-import 'package:frontend/src/models/bottom_nav_model.dart';
+import 'package:frontend/src/models/bottom_nav_model/bottom_nav_model.dart';
 import 'package:sizer/sizer.dart';
 
 class CustomBottomNavWidget extends ConsumerWidget {

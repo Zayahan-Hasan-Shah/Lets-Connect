@@ -11,6 +11,7 @@ class TitleText extends StatelessWidget {
   final TextAlign? textAlign;
   final int? maxLines;
   final bool? softWrap;
+  final double? height;
 
   TitleText({
     Key? key,
@@ -21,7 +22,8 @@ class TitleText extends StatelessWidget {
     this.color,
     this.textAlign,
     this.maxLines,
-    this.softWrap
+    this.softWrap,
+    this.height,
   }) : super(key: key);
 
   @override
@@ -36,6 +38,7 @@ class TitleText extends StatelessWidget {
             fontSize: fontSize ?? 14,
             fontWeight: weight ?? FontWeight.normal,
             color: color ?? ColorAssets.whiteColor,
+            height: height,
           ),
     );
   }

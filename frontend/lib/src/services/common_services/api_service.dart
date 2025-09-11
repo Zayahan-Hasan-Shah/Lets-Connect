@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:frontend/src/services/common_services/storage_service.dart';
 import 'package:http/http.dart' as http;
 
-const tokenKey = 'tokenKey';
+String tokenKey = '';
 
 class APIService {
   StorageServices storageServices = StorageServices();
@@ -62,11 +62,12 @@ class APIService {
 
   static Future<dynamic> get({required String api}) async {
     try {
-      final token = await StorageServices().read(tokenKey);
+      final token = tokenKey;
       var header;
 
       header = {
         "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
       };
 
       log("*** Request ***");
@@ -76,11 +77,12 @@ class APIService {
 
       if (response.statusCode == 200) {
         log("*** response ***");
+        log("Status Code : ${response.statusCode}");
         log("URI : $api");
 
         log(response.body);
 
-        return response.body;
+        return response;
       }
     } catch (e) {
       log(e.toString());

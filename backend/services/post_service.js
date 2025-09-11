@@ -24,8 +24,8 @@ const getUserPosts = async (user_id) => {
     return await postRepo.getUserPosts(user_id);
 };
 
-const getAllPosts = async () => {
-    return await postRepo.getAllPosts();
+const getAllPosts = async (page, limit) => {
+    return await postRepo.getAllPosts(page, limit);
 };
 
 const likePost = async (user_id, post_id) => {

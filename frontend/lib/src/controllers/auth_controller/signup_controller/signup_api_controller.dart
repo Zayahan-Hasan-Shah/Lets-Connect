@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/src/models/signup_model.dart';
+import 'package:frontend/src/models/auth_model/signup_model.dart';
 import 'package:frontend/src/services/auth_services/auth_service.dart';
 
 class SignupAuthNotifier extends StateNotifier<SignupModel?> {

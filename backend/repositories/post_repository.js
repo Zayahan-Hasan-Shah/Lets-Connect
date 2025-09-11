@@ -42,14 +42,34 @@ const getUserPosts = async (user_id) => {
     return rows;
 };
 
-const getAllPosts = async () => {
+// const getAllPosts = async () => {
+//     const [rows] = await db.query(`
+//         SELECT p.*, u.username
+//         FROM posts p 
+//         JOIN users u ON p.user_id = u.id 
+//         ORDER BY p.created_at DESC
+//     `);
+//     return rows;
+// };
+
+const getAllPosts = async (page = 1, limit = 20) => {
+    const offset = (page - 1) * limit;
+
     const [rows] = await db.query(`
-        SELECT p.*, u.username, u.email 
-        FROM posts p 
-        JOIN users u ON p.user_id = u.id 
+        SELECT p.*, u.username
+        FROM posts p
+        JOIN users u ON p.user_id = u.id
         ORDER BY p.created_at DESC
-    `);
-    return rows;
+        LIMIT ? OFFSET ?
+    `, [limit, offset]);
+
+
+    const [[{ total }]] = await db.query(`SELECT COUNT(*) as total FROM posts`);
+
+
+    return {
+        posts: rows, total
+    };
 };
 
 const likePost = async (user_id, post_id) => {

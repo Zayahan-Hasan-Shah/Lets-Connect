@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:frontend/src/core/api_urls.dart';
-import 'package:frontend/src/models/forgot_password_model.dart';
-import 'package:frontend/src/models/login_model.dart';
-import 'package:frontend/src/models/signup_model.dart';
+import 'package:frontend/src/models/auth_model/forgot_password_model.dart';
+import 'package:frontend/src/models/auth_model/login_model.dart';
+import 'package:frontend/src/models/auth_model/signup_model.dart';
 import 'package:frontend/src/services/common_services/api_service.dart';
 
 class AuthService {

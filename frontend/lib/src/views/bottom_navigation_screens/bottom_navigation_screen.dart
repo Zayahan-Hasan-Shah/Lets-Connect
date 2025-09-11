@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/src/controllers/bottom_navigation_controller/bottom_navigation_controller.dart';
 import 'package:frontend/src/core/color_assets.dart';
-import 'package:frontend/src/models/bottom_nav_model.dart';
+import 'package:frontend/src/models/bottom_nav_model/bottom_nav_model.dart';
 import 'package:frontend/src/views/bottom_navigation_screens/screens/chat/chat_list_user_screen.dart';
 import 'package:frontend/src/views/bottom_navigation_screens/screens/home/home_screen.dart';
 import 'package:frontend/src/views/bottom_navigation_screens/screens/profile/profile_screen.dart';
