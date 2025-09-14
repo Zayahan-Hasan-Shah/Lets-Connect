@@ -126,7 +126,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 emailController.text.trim(),
                 passwordController.text.trim(),
               );
-              context.go('/bottompage');
             } finally {
               ref.read(customButtonController.notifier).state = false;
             }
@@ -191,7 +190,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           title: 'Welcome',
           backgroundColor: ColorAssets.successColor,
         );
-        // context.push(RoutesNames.landingPage);
+
+        // ✅ Navigate only on success
+        context.go('/bottompage');
       } else {
         CustomSnackbar.show(
           context: context,
